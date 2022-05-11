@@ -1,0 +1,10 @@
+library(readr)
+  data=read_delim("endlineBlood_data.csv.gz",delim = ',', col_names = T)
+  ttreat=table(data$treatment)
+tsymp=table(data$treatment[data$symp==1])
+tblood=table(data$treatment[data$symp==1&data$dum_endline_blood==1])
+tposxsym=table(data$treatment[data$symp==1&data$dum_endline_blood==1&data$posXsymp])
+
+df=as.data.frame(rbind(ttreat, tsymp, tblood, tposxsym))
+colnames(df)=c("treatment", "control")
+write.table(df, quote=F, sep='\t', file="flowTable.txt")
